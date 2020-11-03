@@ -3,4 +3,4 @@
 	url = https://github.com/joyent/sdc-vmtools.git
 [submodule "eng"]
 	path = eng
-	url = https://github.com/joyent/eng
+	url = https://github.com/richard-burhans/eng.git
