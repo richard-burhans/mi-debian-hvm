@@ -98,6 +98,21 @@ manage_etc_hosts: localhost
 locale: C.UTF-8
 EOF
 
+# bx ipv6 workaround
+echo "bx ipv6 workaround"
+mkdir /etc/systemd/system/cloud-init-local.service.d
+chown root:root /etc/systemd/system/cloud-init-local.service.d
+chmod 755 /etc/systemd/system/cloud-init-local.service.d
+cat <<EOF > /etc/systemd/system/cloud-init-local.service.d/bx-ipv6.conf
+[Service]
+ExecStart=
+ExecStart=/usr/bin/cloud-init init --local
+ExecStart=/usr/bin/bash /lib/smartdc/bx-ipv6-workaround
+ExecStart=/bin/touch /run/cloud-init/network-config-ready
+EOF
+chown root:root /etc/systemd/system/cloud-init-local.service.d/bx-ipv6.conf
+chmod 644 /etc/systemd/system/cloud-init-local.service.d/bx-ipv6.conf
+
 # Clean up all apt caches
 echo "Cleaning up apt caches"
 apt-get -y autoremove
